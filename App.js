@@ -1,10 +1,15 @@
-import { Platform, SafeAreaView, StatusBar, StyleSheet, Text } from 'react-native';
+import react from 'react';
+import { Platform, SafeAreaView, StatusBar, StyleSheet } from 'react-native';
+
+import HomeProjects from './src/screens/HomeProjects';
 
 export default function App() {
+
   return (
+    
     <SafeAreaView style={styles.androidSafeArea}>
-      <Text>Open up App.js to start working on your app!</Text>
       <StatusBar style="auto" />
+      <HomeProjects />
     </SafeAreaView>
   );
 }
