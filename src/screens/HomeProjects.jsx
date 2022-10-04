@@ -1,25 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { FlatList, Image, Pressable, StyleSheet, Text, View } from 'react-native'
 
 import CardProject from '../components/cardProjects/CardProject';
-import Login from './Login';
 import { projects } from '../projects'
 import { Colors } from '../assets/styles/colors';
 
 
 export default function HomeProjects() {
 
-    const [login, setLogin] = useState(true)
     const renderProject = ({ item }) => <CardProject name={item.name} status={item.status} dueDate={item.dueDate} />;
-    if (!login) {
-        return (
-            <View style={styles.safeArea}>
-                <StatusBar style="auto" />
-                <Login />
-            </View>
-        );
-    }
+
     return (
         <View  >
             <StatusBar style="auto" />
