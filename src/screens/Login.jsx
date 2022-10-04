@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Image, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
 
-import { Colors } from '../styles/colors'
+import { Colors } from '../assets/styles/colors'
 
 export default function Login() {
   return (
