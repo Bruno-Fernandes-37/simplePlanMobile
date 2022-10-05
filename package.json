@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "expo start",
+    "start": "expo start --tunnel",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web"
@@ -18,7 +18,8 @@
     "graphql": "^15.8.0",
     "jwt-decode": "^3.1.2",
     "react": "18.0.0",
-    "react-native": "0.69.6"
+    "react-native": "0.69.6",
+    "expo-updates": "~0.14.6"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

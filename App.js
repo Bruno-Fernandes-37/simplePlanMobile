@@ -1,14 +1,12 @@
 import React from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { Platform, SafeAreaView, StyleSheet, Text, View } from 'react-native';
-// import {AppoloProvider, AppoloClient} from '@apollo/client';
-import {ApolloClient, ApolloProvider, InMemoryCache, createHttpLink, useMutation} from '@apollo/client';
+import {ApolloClient, ApolloProvider, InMemoryCache, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
 import { AuthContextProvider, AuthContext } from './src/contexts/AuthContext';
-import Login from './src/screens/Login';
+import LoginScreen from './src/screens/LoginScreen';
 
-import HomeProjects from './src/screens/HomeProjects';
+import HomeProjectScreen from './src/screens/HomeProjectScreen';
+import AsyncStorage  from '@react-native-async-storage/async-storage';
 
 
 export default function App() {
@@ -16,22 +14,24 @@ export default function App() {
 
   return (
     <AuthContextProvider>
-        <AppScreen />
+        <InitApp />
     </AuthContextProvider>
   )
 }
 
-const AppScreen = () => {
+const InitApp = () => {
   const { onLogout } = React.useContext(AuthContext);
-  const VITE_SERVER_URL = "http://localhost:5000/graphql";
+  //  TODO: en PROD => renvoyer sur l'uri de  l'api DEV 
+  //  Connection avec ngrok => voir cf(https://articles.wesionary.team/localhost-to-react-native-expo-projects-f0e4ce7d624f)
+  const VITE_SERVER_URL = "https://39e9-86-250-223-46.eu.ngrok.io/graphql"; 
 
   const httpLink = createHttpLink({
     uri: VITE_SERVER_URL,
   });
 
-  const authLink = setContext((_, { headers }) => {
+  const authLink = setContext( async (_, { headers }) => {
     // get the authentication token from local storage if it exists
-    // const token = localStorage.getItem('access-token');
+    const token =  await AsyncStorage.getItem('@access-token');
     // return the headers to the context so httpLink can read them
     return {
       headers: {
@@ -57,6 +57,7 @@ const AppScreen = () => {
     cache: new InMemoryCache(),
   });
 
+
   React.useEffect(() => {
     setLink(authLink);
   }, []);
@@ -71,26 +72,7 @@ const AppScreen = () => {
 const RootScreens = () => {
   const { isLogged } = React.useContext(AuthContext)
 
-  if (isLogged) {
-    return (
-      <SafeAreaView style={styles.androidSafeArea}>
-        <StatusBar style="auto" />
-        <Login />
-      </SafeAreaView>
-    );
-  }
-
   return (
-    <SafeAreaView style={styles.androidSafeArea}>
-      <StatusBar style="auto" />
-      <HomeProjects />
-    </SafeAreaView>
-  );
+      isLogged ? <HomeProjectScreen /> : <LoginScreen />
+  )
 }
-
-const styles = StyleSheet.create({
-  androidSafeArea: {
-    flex: 1,
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
-  }
-});
