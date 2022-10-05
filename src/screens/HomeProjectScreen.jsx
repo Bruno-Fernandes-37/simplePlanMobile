@@ -11,7 +11,7 @@ import { AuthContext } from '../contexts/AuthContext';
 export default function HomeProjectScreen() {
     const { onLogout } = React.useContext(AuthContext);
 
-    const renderProject = ({ item }) => <CardProject name={item.name} status={item.status} dueDate={item.dueDate} />;
+    const renderProject = ({ item }) => <CardProject name={item.name} status={item.status} dueDate={item.dueDate} key={item.id} />;
 
     return (
         <SafeAreaView style={styles.androidSafeArea}>
@@ -29,21 +29,30 @@ export default function HomeProjectScreen() {
                 <Text style={styles.title}>Your projects</Text>
                 <View style={styles.containerList}>
                     <Text style={styles.text}>In progress</Text>
-                    {/* <FlatList
+                    <FlatList
                         data={projects}
                         renderItem={renderProject}
                         keyExtractor={item => item.id}
                         horizontal={true}
-                    /> */}
+                    />
                 </View>
                 <View style={styles.containerList}>
                     <Text style={styles.text}>Coming soon</Text>
-                    {/* <FlatList
+                    <FlatList
                         data={projects}
                         renderItem={renderProject}
                         keyExtractor={item => item.id}
                         horizontal={true}
-                    /> */}
+                    />
+                </View>
+                <View style={styles.containerList}>
+                    <Text style={styles.text}>Archived</Text>
+                    <FlatList
+                        data={projects}
+                        renderItem={renderProject}
+                        keyExtractor={item => item.id}
+                        horizontal={true}
+                    />
                 </View>
                 <Button
                     style={styles.button}
@@ -61,11 +70,9 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
     },
-    safeArea: {
-        flex: 1
-    },
     containerImg: {
         alignItems: 'flex-end',
+        marginTop: 15,
     },
     image: {
         width: 40,
@@ -73,17 +80,18 @@ const styles = StyleSheet.create({
         margin: 20,
     },
     title: {
-        fontSize: 30,
+        fontSize: 40,
         textAlign: 'center',
         fontWeight: 'bold',
         color: Colors.veryPeri,
-        margin: 20,
+        margin: 15,
     },
     containerList: {
-        marginTop: 20
+        marginTop: 25
     },
     text: {
-        margin: 10,
+        margin: 5,
+        fontSize: 20,
     },
     button: {
         marginTop: 15,

@@ -6,4 +6,6 @@ export const Colors = {
     lavenderPastel: '#D8D8E9',
     pinkPastel: '#EFE4F1',
     greenTea: '#E8F8C1',
+    bgVeryPeri: 'E9D8FD',
+    bgGrey: '#f9f9f9'
 }
