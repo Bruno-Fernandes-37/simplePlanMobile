@@ -10,17 +10,21 @@ export const AuthContextDefaultValue = {
 };
 
 const getToken = async () => {
-  const access = await AsyncStorage.getItem('access-token');
-  if (access) {
+  try {
+    const access = await AsyncStorage.getItem('access-token');
     return access;
+  } catch (error) {
+    console.warn(JSON.stringify(error.message))
   }
   return;
 };
 
 const getCurrentUser = async () => {
-  const user = await AsyncStorage.getItem('@current-user');
-  if (user) {
-    return JSON.parse(user);
+  try {
+    const user = await AsyncStorage.getItem('@current-user');
+    return user;
+  } catch (error) {
+    console.warn(JSON.stringify(error.message))
   }
   return;
 };
@@ -34,7 +38,7 @@ export function AuthContextProvider({ children }) {
 
   const onLogout = async () => {
     try {
-      AsyncStorage.multiRemove(['@access-token', '@current-user']);
+      const removed = await AsyncStorage.multiRemove(['@access-token', '@current-user']);
       setIsLogged(false);
     } catch (e) {
       console.warn(JSON.stringify(e.message))
@@ -45,27 +49,27 @@ export function AuthContextProvider({ children }) {
     const decodedToken = jwt_decode(userToken);
     if (decodedToken) {
       try {
-        await AsyncStorage.setItem('@current-user', JSON.stringify(decodedToken.data))
+        const currentU = await AsyncStorage.setItem('@current-user', JSON.stringify(decodedToken.data))
+        setCurrentUser(decodedToken.data);
       } catch (e) {
         console.warn(JSON.stringify(e.message))
       }
-      setCurrentUser(decodedToken.data);
     }
     try {
-      await AsyncStorage.setItem('@access-token', userToken)
+      const accessT = await AsyncStorage.setItem('@access-token', userToken)
       setToken(userToken);
       setIsLogged(true);
     } catch (e) {
       console.warn(JSON.stringify(e.message))
     }
   };
-
-  React.useEffect(() => {
-    if (!token) {
-      return setIsLogged(false);
-    }
-    setIsLogged(true);
-  }, [token, setIsLogged]);
+  // Peut être mieux de ne pas garder la session ouverte si l'application est fermée
+  // React.useEffect(() => {
+  //   if (!token) {
+  //     return setIsLogged(false);
+  //   }
+  //   setIsLogged(true);
+  // }, [token, setIsLogged]);
 
   const value = { isLogged, onLogout, onLogin, currentUser };
 
