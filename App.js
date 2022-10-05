@@ -7,6 +7,7 @@ import LoginScreen from './src/screens/LoginScreen';
 
 import HomeProjectScreen from './src/screens/HomeProjectScreen';
 import AsyncStorage  from '@react-native-async-storage/async-storage';
+import Constants from 'expo-constants';
 
 
 export default function App() {
@@ -23,10 +24,10 @@ const InitApp = () => {
   const { onLogout } = React.useContext(AuthContext);
   //  TODO: en PROD => renvoyer sur l'uri de  l'api DEV 
   //  Connection avec ngrok => voir cf(https://articles.wesionary.team/localhost-to-react-native-expo-projects-f0e4ce7d624f)
-  const VITE_SERVER_URL = "https://39e9-86-250-223-46.eu.ngrok.io/graphql"; 
+   
 
   const httpLink = createHttpLink({
-    uri: VITE_SERVER_URL,
+    uri: Constants.manifest.extra.VITE_SERVER_URL,
   });
 
   const authLink = setContext( async (_, { headers }) => {

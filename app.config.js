@@ -1,4 +1,6 @@
-{
+import "dotenv/config";
+
+export default {
   "expo": {
     "name": "simplePlanMobile",
     "slug": "simplePlanMobile",
@@ -28,6 +30,9 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    extra: {
+      VITE_SERVER_URL: process.env.VITE_SERVER_URL,
+    },
   }
 }
