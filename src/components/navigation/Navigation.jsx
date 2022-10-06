@@ -39,7 +39,6 @@ export const Navigation = () => {
                     },
                     tabBarActiveTintColor: Colors.veryPeri,
                     tabBarInactiveTintColor: Colors.grey,
-
                 })}
             >
                 <Tab.Screen name="Home" component={HomeProjectScreen} />

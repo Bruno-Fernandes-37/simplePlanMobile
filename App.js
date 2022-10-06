@@ -74,8 +74,8 @@ const RootScreens = () => {
   const { isLogged } = React.useContext(AuthContext)
 
   return (
-     // isLogged ? <Navigation /> : <LoginScreen/> 
-      <Navigation />
+     isLogged ? <Navigation /> : <LoginScreen/> 
+     // <Navigation />
   )
 }
 

@@ -7,7 +7,7 @@ export default function CardProject({ name, status, dueDate }) {
 
     const colorBorder = (status) => {
         switch (status) {
-            case 'in_progress':
+            case 'in progress':
                 return styles.colorVeryPeri;
             case 'late':
                 return styles.colorMelonPastel;
@@ -20,7 +20,7 @@ export default function CardProject({ name, status, dueDate }) {
 
     const colorStatus = (status) => {
         switch (status) {
-            case 'in_progress':
+            case 'in progress':
                 return styles.statusVeryPeri;
             case 'late':
                 return styles.statusMelonPastel;
@@ -33,7 +33,7 @@ export default function CardProject({ name, status, dueDate }) {
 
     const colorBorderStatus = (status) => {
         switch (status) {
-            case 'in_progress':
+            case 'in progress':
                 return styles.containerStatusColorVeryPeri;
             case 'late':
                 return styles.containerStatusColorMelonPastel;
@@ -46,7 +46,7 @@ export default function CardProject({ name, status, dueDate }) {
 
     return (
 
-        <View style={[styles.container, colorBorder(status)]}/*corlor carte status*/>
+        <View style={[styles.container, colorBorder(status)]} /*corlor carte status*/>
             <Text style={styles.title}>{name}</Text>
             <View style={[styles.containerStatus, colorBorderStatus(status)]}>
                 <Text style={[styles.textStatus, colorStatus(status)]}>{status}</Text>

@@ -1,52 +1,92 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react'
-import { FlatList, Image, Pressable, StyleSheet, Text, View, SafeAreaView, Button } from 'react-native'
+import { FlatList, StyleSheet, Text, View, SafeAreaView } from 'react-native'
+import { useQuery } from '@apollo/client';
+import AppLoading from 'expo-app-loading';
 
 import CardProject from '../components/cardProjects/CardProject';
-import { projects } from '../projects'
 import { Colors } from '../assets/styles/colors';
-import { AuthContext } from '../contexts/AuthContext';
+import { PROJECTS } from '../api/projects';
 
 
 export default function HomeProjectScreen() {
-    const { onLogout } = React.useContext(AuthContext);
-    const renderProject = ({ item }) => <CardProject name={item.name} status={item.status} dueDate={item.dueDate} key={item.id} />;
+
+    const [projects, setProjects] = React.useState([]);
+    const [projectError, setProjectError] = React.useState('')
+
+    let projectsActif = []
+    let projectsNotStarted = []
+    let projectsArchived = []
+
+    const { data, loading } = useQuery(PROJECTS.get, {
+        onError: (err) => {
+            setProjectError(err);
+        }
+    });
+
+    React.useEffect(() => {
+        if (!loading) {
+            setProjects(data.getProjects);
+            setProjectError('');
+
+        }
+        return
+    }, [data])
+
+
+    projectsActif = projects.filter((project) => project.status === 'in progress' || project.status === 'late' || project.status === 'done')
+    projectsNotStarted = projects.filter((project) => project.status === 'not started')
+    projectsArchived = projects.filter((project) => project.status === 'archived')
+
+    const renderProject = ({ item }) => <CardProject name={item.name} status={item.status} dueDate={item.dueDate} />;
 
     return (
-            <SafeAreaView style={styles.androidSafeArea}>
-                <StatusBar style="auto" />
-                <View>
-                    <Text style={styles.title}>Your projects</Text>
-                    <View style={styles.containerList}>
-                        <Text style={styles.text}>In progress</Text>
+        <SafeAreaView style={styles.androidSafeArea}>
+            <StatusBar style="auto" />
+            <View>
+                <Text style={styles.title}>Your projects</Text>
+                <View style={styles.containerList}>
+                    <Text style={styles.text}>In progress</Text>
+
+                    {loading ?
+                        <AppLoading onError={console.warn} />
+                        :
                         <FlatList
-                            data={projects}
+                            data={projectsActif}
                             renderItem={renderProject}
                             keyExtractor={item => item.id}
                             horizontal={true}
-                        />
-                    </View>
-                    <View style={styles.containerList}>
-                        <Text style={styles.text}>Coming soon</Text>
+                        />}
+                </View>
+                <View style={styles.containerList}>
+                    <Text style={styles.text}>Coming soon</Text>
+                    {loading ?
+                        <AppLoading onError={console.warn} />
+                        :
                         <FlatList
-                            data={projects}
+                            data={projectsNotStarted}
                             renderItem={renderProject}
                             keyExtractor={item => item.id}
                             horizontal={true}
-                        />
-                    </View>
-                    <View style={styles.containerList}>
-                        <Text style={styles.text}>Archived</Text>
+                        />}
+                </View>
+                <View style={styles.containerList}>
+                    <Text style={styles.text}>Archived</Text>
+                    {loading ?
+                        <AppLoading onError={console.warn} />
+                        :
                         <FlatList
-                            data={projects}
+                            data={projectsArchived}
                             renderItem={renderProject}
                             keyExtractor={item => item.id}
                             horizontal={true}
-                        />
-                    </View>
-                </View >
-            </SafeAreaView>
-    );
+                        />}
+                </View>
+                {projectError && <Text style={styles.errorText} >{projectError.toString()}</Text>}
+            </View >
+        </SafeAreaView >
+    )
+
 }
 
 const styles = StyleSheet.create({
@@ -77,5 +117,10 @@ const styles = StyleSheet.create({
         margin: 5,
         fontSize: 20,
     },
-
+    errorText: {
+        marginTop: 10,
+        color: Colors.pinkPastel,
+        fontSize: 20,
+        fontWeight: 'bold',
+    }
 })

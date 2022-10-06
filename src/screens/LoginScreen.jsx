@@ -1,11 +1,12 @@
 import React from 'react'
 import { Button, Image, Pressable, StyleSheet, Text, TextInput, View, SafeAreaView } from 'react-native'
 import { useMutation } from '@apollo/client';
-import { USERS } from '../api/users';
+import { StatusBar } from 'expo-status-bar';
 
+import { USERS } from '../api/users';
 import { AuthContext } from '../contexts/AuthContext';
 import { Colors } from '../assets/styles/colors'
-import { StatusBar } from 'expo-status-bar';
+
 
 export default function LoginScreen() {
   const { onLogin } = React.useContext(AuthContext);
