@@ -3,11 +3,11 @@ import {ApolloClient, ApolloProvider, InMemoryCache, createHttpLink } from '@apo
 import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
 import { AuthContextProvider, AuthContext } from './src/contexts/AuthContext';
-import LoginScreen from './src/screens/LoginScreen';
-
-import HomeProjectScreen from './src/screens/HomeProjectScreen';
 import AsyncStorage  from '@react-native-async-storage/async-storage';
 import Constants from 'expo-constants';
+
+import LoginScreen from './src/screens/LoginScreen';
+import { Navigation } from './src/components/navigation/Navigation';
 
 
 export default function App() {
@@ -74,8 +74,9 @@ const RootScreens = () => {
   const { isLogged } = React.useContext(AuthContext)
 
   return (
-      isLogged ? <HomeProjectScreen /> : <HomeProjectScreen /> 
+     // isLogged ? <Navigation /> : <LoginScreen/> 
+      <Navigation />
   )
 }
 
-{/* <LoginScreen /> */}
+

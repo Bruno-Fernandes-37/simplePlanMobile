@@ -10,61 +10,45 @@ import { AuthContext } from '../contexts/AuthContext';
 
 export default function HomeProjectScreen() {
     const { onLogout } = React.useContext(AuthContext);
-
     const renderProject = ({ item }) => <CardProject name={item.name} status={item.status} dueDate={item.dueDate} key={item.id} />;
 
     return (
-        <SafeAreaView style={styles.androidSafeArea}>
-            <StatusBar style="auto" />
-            <View  >
+            <SafeAreaView style={styles.androidSafeArea}>
                 <StatusBar style="auto" />
-                <View style={styles.containerImg}>
-                    <Pressable onPress={() => { }} >
-                        <Image
-                            source={require('../assets/images/settings.png')}
-                            style={styles.image}
+                <View>
+                    <Text style={styles.title}>Your projects</Text>
+                    <View style={styles.containerList}>
+                        <Text style={styles.text}>In progress</Text>
+                        <FlatList
+                            data={projects}
+                            renderItem={renderProject}
+                            keyExtractor={item => item.id}
+                            horizontal={true}
                         />
-                    </Pressable>
-                </View>
-                <Text style={styles.title}>Your projects</Text>
-                <View style={styles.containerList}>
-                    <Text style={styles.text}>In progress</Text>
-                    <FlatList
-                        data={projects}
-                        renderItem={renderProject}
-                        keyExtractor={item => item.id}
-                        horizontal={true}
-                    />
-                </View>
-                <View style={styles.containerList}>
-                    <Text style={styles.text}>Coming soon</Text>
-                    <FlatList
-                        data={projects}
-                        renderItem={renderProject}
-                        keyExtractor={item => item.id}
-                        horizontal={true}
-                    />
-                </View>
-                <View style={styles.containerList}>
-                    <Text style={styles.text}>Archived</Text>
-                    <FlatList
-                        data={projects}
-                        renderItem={renderProject}
-                        keyExtractor={item => item.id}
-                        horizontal={true}
-                    />
-                </View>
-                <Button
-                    style={styles.button}
-                    title='logout'
-                    onPress={() => onLogout()}
-                    accessibilityLabel='clik for connection'
-                    color={Colors.melonPastel}
-                />
-            </View >
-        </SafeAreaView>
+                    </View>
+                    <View style={styles.containerList}>
+                        <Text style={styles.text}>Coming soon</Text>
+                        <FlatList
+                            data={projects}
+                            renderItem={renderProject}
+                            keyExtractor={item => item.id}
+                            horizontal={true}
+                        />
+                    </View>
+                    <View style={styles.containerList}>
+                        <Text style={styles.text}>Archived</Text>
+                        <FlatList
+                            data={projects}
+                            renderItem={renderProject}
+                            keyExtractor={item => item.id}
+                            horizontal={true}
+                        />
+                    </View>
+                </View >
+            </SafeAreaView>
     );
 }
+
 const styles = StyleSheet.create({
     androidSafeArea: {
         flex: 1,
@@ -93,7 +77,5 @@ const styles = StyleSheet.create({
         margin: 5,
         fontSize: 20,
     },
-    button: {
-        marginTop: 15,
-    },
+
 })

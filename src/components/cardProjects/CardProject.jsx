@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
         padding: 15,
         borderWidth: 2,
         margin: 8,
-        borderRadius: 5,
+        borderRadius: 10,
         backgroundColor: Colors.bgGrey,
     },
     colorVeryPeri: {
