@@ -28,7 +28,6 @@ export default function HomeProjectScreen() {
         if (!loading) {
             setProjects(data.getProjects);
             setProjectError('');
-
         }
         return
     }, [data])
@@ -38,7 +37,7 @@ export default function HomeProjectScreen() {
     projectsNotStarted = projects.filter((project) => project.status === 'not started')
     projectsArchived = projects.filter((project) => project.status === 'archived')
 
-    const renderProject = ({ item }) => <CardProject name={item.name} status={item.status} dueDate={item.dueDate} />;
+    const renderProjects = ({ item }) => <CardProject name={item.name} status={item.status} dueDate={item.dueDate} id={item._id}/>;
 
     return (
         <SafeAreaView style={styles.androidSafeArea}>
@@ -52,8 +51,9 @@ export default function HomeProjectScreen() {
                         <AppLoading onError={console.warn} />
                         :
                         <FlatList
+                            style={styles.card}
                             data={projectsActif}
-                            renderItem={renderProject}
+                            renderItem={renderProjects}
                             keyExtractor={item => item.id}
                             horizontal={true}
                         />}
@@ -64,8 +64,9 @@ export default function HomeProjectScreen() {
                         <AppLoading onError={console.warn} />
                         :
                         <FlatList
+                            style={styles.card}
                             data={projectsNotStarted}
-                            renderItem={renderProject}
+                            renderItem={renderProjects}
                             keyExtractor={item => item.id}
                             horizontal={true}
                         />}
@@ -76,8 +77,9 @@ export default function HomeProjectScreen() {
                         <AppLoading onError={console.warn} />
                         :
                         <FlatList
+                            style={styles.card}
                             data={projectsArchived}
-                            renderItem={renderProject}
+                            renderItem={renderProjects}
                             keyExtractor={item => item.id}
                             horizontal={true}
                         />}
@@ -86,22 +88,12 @@ export default function HomeProjectScreen() {
             </View >
         </SafeAreaView >
     )
-
 }
 
 const styles = StyleSheet.create({
     androidSafeArea: {
         flex: 1,
         paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
-    },
-    containerImg: {
-        alignItems: 'flex-end',
-        marginTop: 15,
-    },
-    image: {
-        width: 40,
-        height: 40,
-        margin: 20,
     },
     title: {
         fontSize: 40,
@@ -110,17 +102,19 @@ const styles = StyleSheet.create({
         color: Colors.veryPeri,
         margin: 15,
     },
-    containerList: {
-        marginTop: 25
-    },
     text: {
         margin: 5,
+        paddingLeft: 10,
         fontSize: 20,
+        color: Colors.veryPeri
     },
     errorText: {
         marginTop: 10,
         color: Colors.pinkPastel,
         fontSize: 20,
         fontWeight: 'bold',
+    },
+    card: {
+        marginLeft: 10,
     }
 })

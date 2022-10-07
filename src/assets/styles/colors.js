@@ -7,5 +7,7 @@ export const Colors = {
     pinkPastel: '#EFE4F1',
     greenTea: '#E8F8C1',
     bgVeryPeri: 'E9D8FD',
-    bgGrey: '#f9f9f9'
+    bgGrey: '#f9f9f9',
+    bgYellow: '#fef08a',
+    yellow: '#ca8a04',
 }

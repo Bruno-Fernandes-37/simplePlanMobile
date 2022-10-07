@@ -39,7 +39,6 @@ export const PROJECTS = {
           _id
           email
           username
-          password
           picture
           preferred_language
         }
@@ -47,21 +46,9 @@ export const PROJECTS = {
           _id
           email
           username
-          password
           picture
           preferred_language
         }
-      }
-    }
-  `,
-  add: gql`
-    mutation AddProject($name: String!, $description: String!, $dueDate: String!) {
-      addProject(name: $name, description: $description, dueDate: $dueDate) {
-        _id
-        name
-        description
-        status
-        dueDate
       }
     }
   `,
