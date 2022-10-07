@@ -3,12 +3,15 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Button } from 'react-native';
 
 import HomeProjectScreen from '../../screens/HomeProjectScreen';
 import { Colors } from '../../assets/styles/colors';
 import LogoutScreen from '../../screens/LogoutScreen';
 import SettingsScreen from '../../screens/SettingsScreen';
 import ProjectScreen from '../../screens/ProjectScreen';
+import TasksScreen from '../../screens/TasksScreen';
+
 
 
 const Tab = createBottomTabNavigator();
@@ -55,7 +58,22 @@ function NavigationStack() {
     return (
         <Stack.Navigator>
             <Stack.Screen name="Home" component={HomeProjectScreen} />
-            <Stack.Screen name="ProjectScreen" component={ProjectScreen} />
+            <Stack.Screen
+                name="ProjectScreen"
+                component={ProjectScreen}
+                options={({ navigation }) => ({
+                    headerRight: () => (
+                        <Button
+                            title='Tasks'
+                            onPress={() => { navigation.navigate('TasksScreen') }}
+                            color='#684F8E'
+                            accessibilityLabel="Learn more about this purple button"
+                        >
+                            Tasks
+                        </Button>
+                    ),
+                })} />
+            <Stack.Screen name="TasksScreen" component={TasksScreen} />
         </Stack.Navigator>
     );
 }

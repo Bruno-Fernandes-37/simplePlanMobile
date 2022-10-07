@@ -52,7 +52,8 @@ export default function CardProject({ name, status, dueDate, id }) {
     return (
         <Pressable onPress={() => { navigation.navigate('ProjectScreen', { id: id }) }}>
             <View style={[styles.container, colorBorder(status)]} /*corlor carte status*/>
-                <Text style={styles.title}>{name}</Text>
+            <Text style={styles.title}>{name.length < 12 ? name : name.slice(0, 12) + '...'}</Text> 
+
                 <View style={[styles.containerStatus, colorBorderStatus(status)]}>
                     <Text style={[styles.textStatus, colorStatus(status)]}>{status}</Text>
                 </View>

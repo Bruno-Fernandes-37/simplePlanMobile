@@ -48,39 +48,39 @@ export default function HomeProjectScreen() {
                     <Text style={styles.text}>In progress</Text>
 
                     {loading ?
-                        <AppLoading onError={console.warn} />
+                        <AppLoading onError={(e)=> console.warn(e)} />
                         :
                         <FlatList
                             style={styles.card}
                             data={projectsActif}
                             renderItem={renderProjects}
-                            keyExtractor={item => item.id}
+                            keyExtractor={item => item._id}
                             horizontal={true}
                         />}
                 </View>
                 <View style={styles.containerList}>
                     <Text style={styles.text}>Coming soon</Text>
                     {loading ?
-                        <AppLoading onError={console.warn} />
+                        <AppLoading onError={(e)=> console.warn(e)} />
                         :
                         <FlatList
                             style={styles.card}
                             data={projectsNotStarted}
                             renderItem={renderProjects}
-                            keyExtractor={item => item.id}
+                            keyExtractor={item => item._id}
                             horizontal={true}
                         />}
                 </View>
                 <View style={styles.containerList}>
                     <Text style={styles.text}>Archived</Text>
                     {loading ?
-                        <AppLoading onError={console.warn} />
+                        <AppLoading onError={(e)=> console.warn(e)} />
                         :
                         <FlatList
                             style={styles.card}
                             data={projectsArchived}
                             renderItem={renderProjects}
-                            keyExtractor={item => item.id}
+                            keyExtractor={item => item._id}
                             horizontal={true}
                         />}
                 </View>
