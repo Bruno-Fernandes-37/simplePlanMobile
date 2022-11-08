@@ -1,38 +1,15 @@
 import { useQuery } from '@apollo/client';
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { PROJECTS } from '../api/projects';
 import { Colors } from '../assets/styles/colors';
+import DueDate from '../components/date/DueDate';
+import Status from '../components/status/Status';
+import User from '../components/user/User';
 
 export default function ProjectScreen({ route }) {
 
-    // returns a style with a coloured border depending on the status of the project
-    const colorBorder = (status) => {
-        switch (status) {
-            case 'in progress':
-                return styles.colorYellow;
-            case 'late':
-                return styles.colorMelonPastel;
-            case 'done':
-                return styles.colorGreenTea;
-            default:
-                return styles.colorGrey;
-        }
-    }
 
-    // returns a style with a colour status according to the project status
-    const colorStatus = (status) => {
-        switch (status) {
-            case 'in progress':
-                return styles.statusYellow;
-            case 'late':
-                return styles.statusMelonPastel;
-            case 'done':
-                return styles.statusGreenTea;
-            default:
-                return styles.statusGrey;
-        }
-    }
 
     const id = route.params && route.params.id
 
@@ -42,7 +19,7 @@ export default function ProjectScreen({ route }) {
     const { data, loading } = useQuery(PROJECTS.getOne, { variables: { getProjectId: id } }, {
         onError: (err) => {
             setProjectError(err);
-        } 
+        }
     });
 
     // returns a style with a coloured border depending on the status of the project
@@ -53,32 +30,32 @@ export default function ProjectScreen({ route }) {
         }
         return
     }, [data])
-    
+
 
     const { name, status, dueDate, description, projectManager, developpers } = project
-    //format date
-    let date = new Date(dueDate * 1).toDateString()
 
     return project && name && (
         <View>
+             <ScrollView>
             <Text style={styles.title}>{name}</Text>
             <View style={styles.header}>
-                <View style={[styles.borderHaeder, colorBorder(status)]}>
-                    <Text style={colorStatus(status)}>{status}</Text>
-                </View>
-                <View style={styles.borderHaeder}>
-                    <Text>{date}</Text>
-                </View>
+                <Status status={status} />
+                <DueDate dueDate={dueDate} />
             </View>
-            <View>
+            <View style={styles.containerDescription}>
                 <Text style={styles.description}>{description}</Text>
             </View>
-            <Text style={styles.manager}>Project Manager: {projectManager?.username}</Text>
+            <View>
+                <Text style={styles.manager}>Project Manager: </Text>
+                <User user={projectManager} />
+            </View>
+            
             <View >
                 <Text style={styles.dev}>Developper:</Text>
-                {developpers.length && developpers.map((dev) => <Text style={styles.dev}>- {dev.username}</Text>)}
+                {developpers.length && developpers.map((developper) => <User user={developper} />)}
             </View>
             {projectError && <Text style={styles.errorText} >{projectError.toString()}</Text>}
+             </ScrollView>
         </View>
     )
 }
@@ -96,52 +73,19 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         marginBottom: 35,
     },
-    colorYellow: {
-        borderColor: Colors.yellow,
-        backgroundColor: Colors.bgYellow
-
-    },
-    colorMelonPastel: {
-        borderColor: 'red',
-        backgroundColor: Colors.melonPastel
-    },
-    colorGreenTea: {
-        borderColor: 'green',
-        backgroundColor: Colors.greenTea
-    },
-    colorGrey: {
-        borderColor: Colors.grey,
-        backgroundColor: Colors.bgGrey
-    },
-    statusYellow: {
-        color: Colors.yellow,
-    },
-    statusMelonPastel: {
-        color: 'red',
-    },
-    statusGreenTea: {
-        color: 'green',
-    },
-    statusGrey: {
-        color: 'balck',
-    },
-    borderHaeder: {
-        alignItems: 'center',
-        width: 180,
-        padding: 20,
-        borderWidth: 1,
-        borderRadius: 10,
+    containerDescription: {
+        padding: 10,
+        backgroundColor: Colors.white,
+        
     },
     description: {
         margin: 15,
     },
     manager: {
-        textTransform: 'capitalize',
         margin: 15,
     },
     dev: {
-        marginStart: 15,
-
+        margin: 15,
     },
     errorText: {
         marginTop: 10,

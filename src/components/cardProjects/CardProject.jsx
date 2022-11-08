@@ -3,10 +3,11 @@ import React from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 
 import { Colors } from '../../assets/styles/colors'
+import DueDate from '../date/DueDate';
+import Status from '../status/Status';
 
 export default function CardProject({ name, status, dueDate, id }) {
 
-    let date = new Date(dueDate * 1).toDateString()
     // changes the colour of the border depending on the status of the project
     const colorBorder = (status) => {
         switch (status) {
@@ -20,48 +21,15 @@ export default function CardProject({ name, status, dueDate, id }) {
                 return styles.colorGrey;
         }
     }
-    // changes the colour of text of the status according to itself 
-    const colorStatus = (status) => {
-        switch (status) {
-            case 'in progress':
-                return styles.statusYellow;
-            case 'late':
-                return styles.statusMelonPastel;
-            case 'done':
-                return styles.statusGreenTea;
-            default:
-                return styles.statusGrey;
-        }
-    }
-
-   // changes the colour of the status according to itself
-    const colorBorderStatus = (status) => {
-        switch (status) {
-            case 'in progress':
-                return styles.containerStatusColorYellow;
-            case 'late':
-                return styles.containerStatusColorMelonPastel;
-            case 'done':
-                return styles.containerStatusColorGreenTea;
-            default:
-                return styles.containerStatusColorGrey;
-        }
-    }
 
     const navigation = useNavigation();
 
     return (
         <Pressable onPress={() => { navigation.navigate('ProjectScreen', { id: id }) }}>
             <View style={[styles.container, colorBorder(status)]} /*corlor carte status*/>
-            <Text style={styles.title}>{name.length < 12 ? name : name.slice(0, 12) + '...'}</Text> 
-
-                <View style={[styles.containerStatus, colorBorderStatus(status)]}>
-                    <Text style={[styles.textStatus, colorStatus(status)]}>{status}</Text>
-                </View>
-                <View style={styles.containerDate}>
-                    <Text style={styles.date}> Due Date : </Text>
-                    <Text style={styles.date}> {date} </Text>
-                </View>
+                <Text style={styles.title}>{name.length < 12 ? name : name.slice(0, 12) + '...'}</Text>
+                <Status status={status} style={styles.containerStatus} />
+                <DueDate dueDate={dueDate} />
             </View>
         </Pressable>
     )
@@ -93,50 +61,10 @@ const styles = StyleSheet.create({
         marginBottom: 5,
     },
     containerStatus: {
+
         margin: 1,
         padding: 3,
         borderWidth: 1,
         borderRadius: 5,
     },
-    containerStatusColorYellow: {
-        backgroundColor: Colors.bgYellow,
-        borderColor: Colors.yellow,
-    },
-    containerStatusColorMelonPastel: {
-        backgroundColor: Colors.melonPastel,
-        borderColor: 'red',
-    },
-    containerStatusColorGreenTea: {
-        backgroundColor: Colors.greenTea,
-        borderColor: 'green',
-    },
-    containerStatusColorGrey: {
-        backgroundColor: Colors.grey,
-        borderColor: 'balck',
-    },
-    textStatus: {
-        textAlign: 'center',
-        fontSize: 12,
-    },
-    statusYellow: {
-        color: Colors.yellow,
-    },
-    statusMelonPastel: {
-        color: 'red',
-    },
-    statusGreenTea: {
-        color: 'green',
-    },
-    statusGrey: {
-        color: 'balck',
-    },
-    containerDate: {
-        marginTop: 10,
-    },
-    date: {
-        marginTop: 5,
-        alignSelf: 'flex-end',
-        fontSize: 12,
-        color: 'grey'
-    }
 })
