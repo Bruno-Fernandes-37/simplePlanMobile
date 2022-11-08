@@ -7,7 +7,7 @@ import { Colors } from '../../assets/styles/colors'
 export default function CardProject({ name, status, dueDate, id }) {
 
     let date = new Date(dueDate * 1).toDateString()
-
+    // changes the colour of the border depending on the status of the project
     const colorBorder = (status) => {
         switch (status) {
             case 'in progress':
@@ -20,7 +20,7 @@ export default function CardProject({ name, status, dueDate, id }) {
                 return styles.colorGrey;
         }
     }
-
+    // changes the colour of text of the status according to itself 
     const colorStatus = (status) => {
         switch (status) {
             case 'in progress':
@@ -34,6 +34,7 @@ export default function CardProject({ name, status, dueDate, id }) {
         }
     }
 
+   // changes the colour of the status according to itself
     const colorBorderStatus = (status) => {
         switch (status) {
             case 'in progress':

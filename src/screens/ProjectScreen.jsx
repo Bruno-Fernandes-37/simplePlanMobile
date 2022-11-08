@@ -6,6 +6,7 @@ import { Colors } from '../assets/styles/colors';
 
 export default function ProjectScreen({ route }) {
 
+    // returns a style with a coloured border depending on the status of the project
     const colorBorder = (status) => {
         switch (status) {
             case 'in progress':
@@ -19,6 +20,7 @@ export default function ProjectScreen({ route }) {
         }
     }
 
+    // returns a style with a colour status according to the project status
     const colorStatus = (status) => {
         switch (status) {
             case 'in progress':
@@ -40,9 +42,10 @@ export default function ProjectScreen({ route }) {
     const { data, loading } = useQuery(PROJECTS.getOne, { variables: { getProjectId: id } }, {
         onError: (err) => {
             setProjectError(err);
-        }
+        } 
     });
 
+    // returns a style with a coloured border depending on the status of the project
     React.useEffect(() => {
         if (!loading) {
             setProject(data.getProject);
@@ -53,6 +56,7 @@ export default function ProjectScreen({ route }) {
     
 
     const { name, status, dueDate, description, projectManager, developpers } = project
+    //format date
     let date = new Date(dueDate * 1).toDateString()
 
     return project && name && (

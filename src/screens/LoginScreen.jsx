@@ -7,7 +7,9 @@ import { USERS } from '../api/users';
 import { AuthContext } from '../contexts/AuthContext';
 import { Colors } from '../assets/styles/colors'
 
-
+/**
+ * view for the login form. when the login is successful send back a token stored in the device's memory
+ */
 export default function LoginScreen() {
   const { onLogin } = React.useContext(AuthContext);
   const [gError, setgError] = React.useState('')

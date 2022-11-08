@@ -8,7 +8,9 @@ import CardProject from '../components/cardProjects/CardProject';
 import { Colors } from '../assets/styles/colors';
 import { PROJECTS } from '../api/projects';
 
-
+/**
+ * Main page of the application, requesting and displaying the list of projects accessible to this user .
+ */
 export default function HomeProjectScreen() {
 
     const [projects, setProjects] = React.useState([]);
@@ -24,6 +26,7 @@ export default function HomeProjectScreen() {
         }
     });
 
+    // at data change, performs an update of the state project
     React.useEffect(() => {
         if (!loading) {
             setProjects(data.getProjects);
@@ -32,7 +35,7 @@ export default function HomeProjectScreen() {
         return
     }, [data])
 
-
+    // filter projects by status to organise the display
     projectsActif = projects.filter((project) => project.status === 'in progress' || project.status === 'late' || project.status === 'done')
     projectsNotStarted = projects.filter((project) => project.status === 'not started')
     projectsArchived = projects.filter((project) => project.status === 'archived')

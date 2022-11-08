@@ -10,8 +10,11 @@ import LoginScreen from './src/screens/LoginScreen';
 import { Navigation } from './src/components/navigation/Navigation';
 
 
+/**
+ * export of the app surrounded by our context
+ * we look at isLogged in the context if it false we send our login view, if it is true we send rootscreen
+ */ 
 export default function App() {
-
 
   return (
     <AuthContextProvider>
@@ -75,7 +78,6 @@ const RootScreens = () => {
 
   return (
      isLogged ? <Navigation /> : <LoginScreen/> 
-     // <Navigation />
   )
 }
 

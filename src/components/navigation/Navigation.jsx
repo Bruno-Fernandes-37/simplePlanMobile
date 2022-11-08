@@ -17,6 +17,7 @@ import TasksScreen from '../../screens/TasksScreen';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
+// icons active or not depending on the view displayed 
 export const Navigation = () => {
     return (
         <NavigationContainer>
