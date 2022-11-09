@@ -58,11 +58,12 @@ export const Navigation = () => {
 function NavigationStack() {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Home" component={HomeProjectScreen} />
+            <Stack.Screen name="HomeScreen" component={HomeProjectScreen} />
             <Stack.Screen
                 name="ProjectScreen"
                 component={ProjectScreen}
                 options={({ navigation }) => ({
+                    headerTitle: '',
                     headerRight: () => (
                         <Button
                             title='Tasks'
@@ -72,7 +73,7 @@ function NavigationStack() {
                         >
                             Tasks
                         </Button>
-                    ),
+                    )
                 })} />
             <Stack.Screen name="TasksScreen" component={TasksScreen} />
         </Stack.Navigator>
