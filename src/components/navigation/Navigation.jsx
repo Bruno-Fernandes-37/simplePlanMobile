@@ -48,7 +48,7 @@ export const Navigation = () => {
                 })}
             >
                 <Tab.Screen name="Home" component={NavigationStack} />
-                <Tab.Screen name="Settings" component={SettingsScreen} />
+                <Tab.Screen name="Settings" component={SettingsScreen} options={{headerShown: true, headerTitle: "Mon profil", headerTitleAlign: 'center'}} />
                 <Tab.Screen name="Logout" component={LogoutScreen} />
             </Tab.Navigator>
         </NavigationContainer>

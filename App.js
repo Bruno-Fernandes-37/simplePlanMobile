@@ -74,7 +74,7 @@ const InitApp = () => {
 }
 
 const RootScreens = () => {
-  const { isLogged } = React.useContext(AuthContext)
+  const { isLogged } = React.useContext(AuthContext);
 
   return (
      isLogged ? <Navigation /> : <LoginScreen/> 
