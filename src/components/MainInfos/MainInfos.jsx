@@ -8,11 +8,11 @@ const MainInfos = ({username, role}) => {
   return (
     <View style={styles.container}>
     <UserPicture />
-      <View>
+      <View style={{marginLeft: 16}}>
         <Text style={styles.username}>{username}</Text>
         <Text style={styles.role}>{role}</Text>
       </View>
-    <Ionicons name='create' color="grey" size={26} style={{marginLeft: 16}} />
+    {/* <Ionicons name='create' color="grey" size={26} style={{marginLeft: 16}} /> */}
   </View>
   )
 }
